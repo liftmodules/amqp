@@ -18,11 +18,21 @@ libraryDependencies <++= liftVersion { v =>
   Nil
 }    
 
-libraryDependencies ++= Seq(
-  "org.scala-tools.testing" % "specs_2.9.1" % "1.6.9" % "test", 
-  "org.scala-tools.testing" % "scalacheck_2.9.1" % "1.9" % "test",
-  "com.rabbitmq" % "amqp-client" % "1.7.2"
-)
+libraryDependencies <++= scalaVersion { sv => 
+  "com.rabbitmq" % "amqp-client" % "1.7.2" ::
+  "org.apache.sanselan" % "sanselan" % "0.97-incubator" ::
+  "org.scala-tools.testing" %% "specs" %  (sv match { 
+      case "2.8.0" => "1.6.5"
+      case "2.9.1" => "1.6.9"
+      case _ => "1.6.8"
+      }) % "test" :: 
+  "org.scalacheck" %% "scalacheck" % (sv match { 
+      case "2.8.0" => "1.7"
+      case "2.8.1" | "2.8.2" => "1.8"
+      case _ => "1.9"
+      }) % "test" ::
+  Nil
+}
 
 publishTo <<= version { _.endsWith("SNAPSHOT") match {
  	case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
