@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.liftweb 
+package net.liftmodules
 package amqp 
 
 import net.liftweb.actor._
