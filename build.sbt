@@ -10,6 +10,8 @@ scalaVersion := "2.9.1"
  
 crossScalaVersions := Seq("2.8.1", "2.9.0-1", "2.9.1")
 
+resolvers += "CB Central Mirror" at "http://repo.cloudbees.com/content/groups/public"
+
 resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
 
 libraryDependencies <++= liftVersion { v =>
