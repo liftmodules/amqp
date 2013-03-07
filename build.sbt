@@ -1,8 +1,8 @@
 name := "amqp"
 
-liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
+liftVersion <<= liftVersion ?? "2.5-RC2"
 
-version <<= liftVersion apply { _ + "-1.2-SNAPSHOT" }
+version <<= liftVersion apply { _ + "-1.2" }
 
 organization := "net.liftmodules"
  
