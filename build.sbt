@@ -1,11 +1,15 @@
 name := "amqp"
 
+organization := "net.liftmodules"
+
+version := "1.2-SNAPSHOT"
+
 liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
 
-version <<= liftVersion apply { _ + "-1.2-SNAPSHOT" }
+liftEdition <<= liftVersion apply { _.substring(0,3) }
 
-organization := "net.liftmodules"
- 
+name <<= (name, liftEdition) { (n, e) =>  n + "_" + e }
+
 scalaVersion := "2.10.0"
 
 crossScalaVersions := Seq("2.10.0", "2.9.2", "2.9.1-1", "2.9.1")
@@ -19,30 +23,25 @@ resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
 resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies <++= liftVersion { v =>
-  "net.liftweb" %% "lift-webkit" % v % "compile->default" ::
-  "net.liftweb" %% "lift-actor" % v % "compile->default" ::
-  Nil
-}    
-
-libraryDependencies <++= scalaVersion { sv => 
-  "com.rabbitmq" % "amqp-client" % "1.7.2" ::
-   (sv match { 
-	 case "2.9.2" | "2.9.1" | "2.9.1-1" => "org.specs2" %% "specs2" % "1.12.3" % "test"
-	 case "2.10.0" => "org.specs2" %% "specs2" % "1.13" % "test"
-      })  :: 
+  "net.liftweb" %% "lift-webkit" % v % "provided" ::
+  "net.liftweb" %% "lift-actor"  % v % "provided" ::
   Nil
 }
 
+libraryDependencies <++= scalaVersion { sv =>
+  "com.rabbitmq" % "amqp-client" % "1.7.2" ::
+   (sv match {
+	 case "2.9.2" | "2.9.1" | "2.9.1-1" => "org.specs2" %% "specs2" % "1.12.3" % "test"
+	 case "2.10.0" => "org.specs2" %% "specs2" % "1.13" % "test"
+      })  ::
+  Nil
+}
 
-
-
- 
 publishTo <<= version { _.endsWith("SNAPSHOT") match {
  	case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
  	case false => Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
   }
- } 
-
+}
 
 // For local deployment:
 
@@ -57,7 +56,6 @@ publishMavenStyle := true
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
-
 
 pomExtra := (
 	<url>https://github.com/liftmodules/amqp</url>
@@ -78,6 +76,6 @@ pomExtra := (
 	      <name>Lift Team</name>
 	      <url>http://www.liftmodules.net</url>
 	 	</developer>
-	 </developers> 
+	 </developers>
  )
-  
+
