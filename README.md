@@ -3,18 +3,22 @@ AMQP Lift Module
 
 This module provides integration with the [Advanced Message Queuing Protocol (AMQP)](http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol).
 
----
-
 Quick start for users
 =====================
 
-Add the dependency to your `built.sbt`. For example, for Lift 2.5:
+
+To include this module in your Lift project, update your `libraryDependencies` in `build.sbt` to include:
+
+*Lift 2.5.x* for Scala 2.9 and 2.10:
 
     "net.liftmodules" %% "amqp_2.5" % "1.2"
 
+*Lift 3.0.x* for Scala 2.10:
 
-Useful links
-------------
+    "net.liftmodules" %% "amqp_3.0" % "1.2-SNAPSHOT"
+
+Documentation
+=============
 
 **Note:** The module package changed from `net.liftweb.amqp` to `net.liftmodules.amqp` in May 2012.  Please consider this when referencing documentation written before that date.
 
@@ -24,7 +28,6 @@ Useful links
 
 * [Distributing Comet Across Multiple Servers](http://cookbook.liftweb.net/#DistributedComet) from _The Lift Cookbook_ uses this module.
 
----
 
 Notes for module developers
 ===========================
