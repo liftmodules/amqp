@@ -2,7 +2,7 @@ name := "amqp"
 
 organization := "net.liftmodules"
 
-version := "1.2-SNAPSHOT"
+version := "1.3-SNAPSHOT"
 
 liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
 
