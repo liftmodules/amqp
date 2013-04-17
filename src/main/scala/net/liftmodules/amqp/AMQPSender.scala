@@ -15,7 +15,7 @@
  */
 
 package net.liftmodules
-package amqp 
+package amqp
 
 import net.liftweb.actor._
 import com.rabbitmq.client._
@@ -28,10 +28,10 @@ import java.io.ObjectOutputStream
  * @see ExampleStringAMQPSender for an example use.
  * @author Steve Jenson (stevej@pobox.com)
  */
-abstract class AMQPSender[T](cf: ConnectionFactory, host: String, port: Int, exchange: String, routingKey: String) extends LiftActor {
-  val conn = cf.newConnection(host, port)
+abstract class AMQPSender[T](cf: ConnectionFactory, exchange: String, routingKey: String) extends LiftActor {
+  val conn = cf.newConnection()
   val channel = conn.createChannel()
-  
+
   /**
    * Override this to use your own AMQP queue/exchange with the given channel.
    */
@@ -42,7 +42,7 @@ abstract class AMQPSender[T](cf: ConnectionFactory, host: String, port: Int, exc
     val bytes = new ByteArrayOutputStream
     val store = new ObjectOutputStream(bytes)
     store.writeObject(msg)
-    store.close
+    store.close()
     channel.basicPublish(exchange, routingKey, null, bytes.toByteArray)
   }
 
@@ -62,10 +62,10 @@ abstract class AMQPSender[T](cf: ConnectionFactory, host: String, port: Int, exc
  * If you are planning to send lots of messages to lots of different exchange/queues,
  * consider creating Actor-based Senders, that will help your application to scale.
  */
-class StringAMQPSender(cf: ConnectionFactory, host: String, port: Int, exchange: String, routingKey: String) 
-    extends AMQPSender[String](cf, host, port, exchange, routingKey){
+class StringAMQPSender(cf: ConnectionFactory, exchange: String, routingKey: String)
+  extends AMQPSender[String](cf, exchange, routingKey) {
   override def configure(channel: Channel) = {
-    val conn = cf.newConnection(host, port)
+    val conn = cf.newConnection()
     val channel = conn.createChannel()
     channel
   }
@@ -75,15 +75,17 @@ class StringAMQPSender(cf: ConnectionFactory, host: String, port: Int, exchange:
  * An Example of how to use the Example subclass of AMQPSender[T]. Still following?
  */
 class ExampleStringAMQPSender {
-  val params = new ConnectionParameters
-  // All of the params, exchanges, and queues are all just example data.
-  params.setUsername("guest")
-  params.setPassword("guest")
-  params.setVirtualHost("/")
-  params.setRequestedHeartbeat(0)
-  val factory = new ConnectionFactory(params)
+  val factory = new ConnectionFactory {
+    import ConnectionFactory._
 
-  val amqp = new StringAMQPSender(factory, "localhost", 5672, "mult", "routeroute")
+    setHost(DEFAULT_HOST)
+    setPort(DEFAULT_AMQP_PORT)
+    setUsername(DEFAULT_USER)
+    setPassword(DEFAULT_PASS)
+    setVirtualHost(DEFAULT_VHOST)
+  }
+
+  val amqp = new StringAMQPSender(factory, "mult", "routeroute")
   amqp ! AMQPMessage("hi")
 }
 
@@ -93,25 +95,28 @@ class ExampleStringAMQPSender {
  * efficient with resources.
  */
 object ExampleDirectAMQPSender {
-  def sendMsg[T](msg: T) {
-    val params = new ConnectionParameters
-    // All of the params, exchanges, and queues are all just example data.
-    params.setUsername("guest")
-    params.setPassword("guest")
-    params.setVirtualHost("/")
-    params.setRequestedHeartbeat(0)
-    sendMsg(msg, params, "localhost", 5672)
+  lazy val factory = new ConnectionFactory {
+    import ConnectionFactory._
+
+    setHost(DEFAULT_HOST)
+    setPort(DEFAULT_AMQP_PORT)
+    setUsername(DEFAULT_USER)
+    setPassword(DEFAULT_PASS)
+    setVirtualHost(DEFAULT_VHOST)
   }
 
-  def sendMsg[T](msg: T, params: ConnectionParameters, host: String, port: Int) {
-    val factory = new ConnectionFactory(params)
-    val conn = factory.newConnection(host, port)
+  def sendMsg[T](msg: T) {
+    sendMsg(msg, factory)
+  }
+
+  def sendMsg[T](msg: T, factory: ConnectionFactory, host: String, port: Int) {
+    val conn = factory.newConnection()
     val channel = conn.createChannel()
     // Now write an object to a byte array and shove it across the wire.
     val bytes = new ByteArrayOutputStream
     val store = new ObjectOutputStream(bytes)
     store.writeObject(msg)
-    store.close
+    store.close()
     channel.basicPublish("mult", "routeroute", null, bytes.toByteArray)
   }
 }

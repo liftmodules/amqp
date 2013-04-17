@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package net.liftmodules {
-package amqp {
+package net.liftmodules
+package amqp
 
 import _root_.com.rabbitmq.client._
 import _root_.net.liftweb.actor._
@@ -23,6 +23,7 @@ import _root_.java.io.ObjectInputStream
 import _root_.java.io.ByteArrayInputStream
 import _root_.java.util.Timer
 import _root_.java.util.TimerTask
+import java.util.concurrent.ExecutorService
 
 /**
  * @param a The actor to add as a Listener to this Dispatcher.
@@ -57,12 +58,12 @@ case class AMQPReconnect(delay: Long)
  *
  * @author Steve Jenson (stevej@pobox.com)
  */
-abstract class AMQPDispatcher[T](cf: ConnectionFactory, host: String, port: Int) extends LiftActor {
+abstract class AMQPDispatcher[T](cf: ConnectionFactory)(implicit executor: ExecutorService = null) extends LiftActor {
   var (conn, channel) = connect()
   private var as: List[LiftActor] = Nil
 
   private def connect(): (Connection, Channel) = {
-    val conn = cf.newConnection(host, port)
+    val conn = cf.newConnection(executor)
     val channel = conn.createChannel()
     configure(channel)
     (conn, channel)
@@ -121,13 +122,13 @@ class SerializedConsumer[T](channel: Channel, a: LiftActor) extends DefaultConsu
  * as your guiding example for creating your own Dispatcher.
  *
  */
-class ExampleSerializedAMQPDispatcher[T](factory: ConnectionFactory, host: String, port: Int)
-    extends AMQPDispatcher[T](factory, host, port) {
+class ExampleSerializedAMQPDispatcher[T](factory: ConnectionFactory)
+    extends AMQPDispatcher[T](factory) {
   override def configure(channel: Channel) {
     // Set up the exchange and queue
     channel.exchangeDeclare("mult", "direct")
-    channel.queueDeclare("mult_queue")
-    channel.queueBind("mult_queue", "mult", "routeroute")
+    val queue = channel.queueDeclare().getQueue
+    channel.queueBind(queue, "mult", "routeroute")
     // Use the short version of the basicConsume method for convenience.
     channel.basicConsume("mult_queue", false, new SerializedConsumer(channel, this))
   }
@@ -138,15 +139,19 @@ class ExampleSerializedAMQPDispatcher[T](factory: ConnectionFactory, host: Strin
  * ExampleSerializedAMQPDispatcher.
  */
 class ExampleStringAMQPListener {
-  val params = new ConnectionParameters
-  params.setUsername("guest")
-  params.setPassword("guest")
-  params.setVirtualHost("/")
-  params.setRequestedHeartbeat(0)
+  lazy val factory = new ConnectionFactory {
+    import ConnectionFactory._
 
-  val factory = new ConnectionFactory(params)
+    // thor.local is a machine on your network with rabbitmq listening on port 5672
+    setHost("thor.local")
+    setPort(DEFAULT_AMQP_PORT)
+    setUsername(DEFAULT_USER)
+    setPassword(DEFAULT_PASS)
+    setVirtualHost(DEFAULT_VHOST)
+  }
+
   // thor.local is a machine on your network with rabbitmq listening on port 5672
-  val amqp = new ExampleSerializedAMQPDispatcher[String](factory, "thor.local", 5672)
+  val amqp = new ExampleSerializedAMQPDispatcher[String](factory)
 
   // Example Listener that just prints the String it receives.
 
@@ -157,7 +162,4 @@ class ExampleStringAMQPListener {
   }
   
   amqp ! AMQPAddListener(stringListener)
-}
-
-}
 }
