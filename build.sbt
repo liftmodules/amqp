@@ -2,7 +2,7 @@ name := "amqp"
 
 organization := "net.liftmodules"
 
-version := "1.2-SNAPSHOT"
+version := "1.3-SNAPSHOT"
 
 liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
 
@@ -29,7 +29,7 @@ libraryDependencies <++= liftVersion { v =>
 }
 
 libraryDependencies <++= scalaVersion { sv =>
-  "com.rabbitmq" % "amqp-client" % "1.7.2" ::
+  "com.rabbitmq" % "amqp-client" % "3.0.4" ::
    (sv match {
 	 case "2.9.2" | "2.9.1" | "2.9.1-1" => "org.specs2" %% "specs2" % "1.12.3" % "test"
 	 case "2.10.0" => "org.specs2" %% "specs2" % "1.13" % "test"

@@ -11,11 +11,11 @@ To include this module in your Lift project, update your `libraryDependencies` i
 
 *Lift 2.5.x* for Scala 2.9 and 2.10:
 
-    "net.liftmodules" %% "amqp_2.5" % "1.2"
+    "net.liftmodules" %% "amqp_2.5" % "1.3-SNAPSHOT"
 
 *Lift 3.0.x* for Scala 2.10:
 
-    "net.liftmodules" %% "amqp_3.0" % "1.2-SNAPSHOT"
+    "net.liftmodules" %% "amqp_3.0" % "1.3-SNAPSHOT"
 
 Documentation
 =============
