@@ -2,9 +2,9 @@ name := "amqp"
 
 organization := "net.liftmodules"
 
-version := "1.4-SNAPSHOT"
+version := "1.3"
 
-liftVersion <<= liftVersion ?? "2.5-SNAPSHOT"
+liftVersion <<= liftVersion ?? "2.5-RC5"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
