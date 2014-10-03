@@ -15,6 +15,8 @@ To include this module in your Lift project, update your `libraryDependencies` i
 
 *Lift 2.6.x* for Scala 2.11:
 
+	 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+	 	 
     "net.liftmodules" %% "amqp_2.6" % "1.4-SNAPSHOT"
 
 *Lift 2.5.x* for Scala 2.9 and 2.10:
