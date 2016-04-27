@@ -4,15 +4,15 @@ organization := "net.liftmodules"
 
 version := "1.4-SNAPSHOT"
 
-liftVersion <<= liftVersion ?? "2.6-SNAPSHOT"
+liftVersion <<= liftVersion ?? "3.0-RC2"
 
 liftEdition <<= liftVersion apply { _.substring(0,3) }
 
 moduleName <<= (name, liftEdition) { (n, e) =>  n + "_" + e }
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.11.0", "2.10.0", "2.9.2", "2.9.1-1", "2.9.1")
+crossScalaVersions := Seq("2.11.8", "2.10.6", "2.9.2", "2.9.1-1", "2.9.1")
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
@@ -28,15 +28,7 @@ libraryDependencies <++= liftVersion { v =>
   Nil
 }
 
-libraryDependencies <++= scalaVersion { sv =>
-  "com.rabbitmq" % "amqp-client" % "3.0.4" ::
-   (sv match {
-      case "2.9.2" | "2.9.1" | "2.9.1-1" => "org.specs2" %% "specs2" % "1.12.3" % "test"
-      case "2.11.0" | "2.11.1" =>  "org.specs2" %% "specs2" % "2.3.11" % "test"
-      case _ => "org.specs2" %% "specs2" % "1.13" % "test"
-      })  ::
-  Nil
-}
+libraryDependencies += "com.rabbitmq" % "amqp-client" % "3.4.0"
 
 publishTo <<= version { _.endsWith("SNAPSHOT") match {
  	case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
