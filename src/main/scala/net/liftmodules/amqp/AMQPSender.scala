@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2011 WorldWide Conferencing, LLC
+ * Copyright 2007-2016 WorldWide Conferencing, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -126,17 +126,15 @@ object ExampleDirectAMQPSender {
  * for me to run from script/console to see the bits flying.
  */
 object AMQPExampleFunPack {
-  def directExample {
+  def directExample: Unit = {
     val recv = new ExampleStringAMQPListener()
     // You should see the message 'hi'
     val sender = new ExampleStringAMQPSender()
-    sender
   }
-  def actorExample {
+  def actorExample: Unit = {
     val recv = new ExampleStringAMQPListener()
     // You probably know what message you are going to see. 'hello!'
     val sender = ExampleDirectAMQPSender.sendMsg("hello!")
-    sender
   }
 }
 
