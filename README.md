@@ -42,6 +42,7 @@ Notes for module developers
 Learn more about modules on the [Lift Wiki page for modules](https://www.assembla.com/spaces/liftweb/wiki/Modules).
 
 Travis hosts the [project build](https://travis-ci.org/liftmodules/amqp/).
+SNAPSHOT versions are automatically published to Sonatype when merged to master.
 
 This project compiles for Lift 3 by default.
 To build for other versions of Lift, change the value of `liftVersion` in SBT.

@@ -1,10 +1,10 @@
 #!/bin/bash
+ 
+# Automatically publish snapshots for branches pushed to master.
 
-if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
-  echo "Not a pull request"
-  if [ "${TRAVIS_BRANCH}" = "feature/lift-3-scala-2.12" ]; then
-    echo "Attemping publish"
-    mkdir -p ~/.sbt/0.13/plugins/
+if [[ "${TRAVIS_PULL_REQUEST}" == "false" &&
+      "${TRAVIS_BRANCH}" == "master" &&
+      $(cat build.sbt) =~ "-SNAPSHOT"
+]]; then
     sbt +publish
-  fi
 fi
