@@ -6,3 +6,6 @@ jdk:
 script:
   - sbt +test +package
 
+after_success:
+  - ./travis-publish.sh
+
