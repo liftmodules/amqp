@@ -35,14 +35,10 @@ publishTo := (version.value.endsWith("SNAPSHOT") match {
   }
 )
 
-
-// For local deployment:
-
-credentials += Credentials( file("sonatype.credentials") )
-
-// For the build server:
-
-credentials += Credentials( file("/private/liftmodules/sonatype.credentials") )
+credentials ++= (for {
+  username <- Option(System.getenv().get("SONATYPE_USERNAME"))
+  password <- Option(System.getenv().get("SONATYPE_PASSWORD"))
+} yield Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password)).toSeq
 
 publishMavenStyle := true
 
