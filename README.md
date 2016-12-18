@@ -6,18 +6,15 @@ This module provides integration with the [Advanced Message Queuing Protocol (AM
 Quick start for users
 =====================
 
-
 To include this module in your Lift project, update your `libraryDependencies` in `build.sbt` to include:
+
+*Lift 2.6.x* for Scala 2.11:
+
+    "net.liftmodules" %% "amqp_2.6" % "1.4.0"
 
 *Lift 2.6.x* for Scala 2.9 and 2.10:
 
     "net.liftmodules" %% "amqp_2.6" % "1.3"
-
-*Lift 2.6.x* for Scala 2.11:
-
-	 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-	 	 
-    "net.liftmodules" %% "amqp_2.6" % "1.4-SNAPSHOT"
 
 *Lift 2.5.x* for Scala 2.9 and 2.10:
 
@@ -42,6 +39,18 @@ Documentation
 Notes for module developers
 ===========================
 
-* The [Jenkins build](https://liftmodules.ci.cloudbees.com/job/amqp/) is triggered on a push to master.
-
 Learn more about modules on the [Lift Wiki page for modules](https://www.assembla.com/spaces/liftweb/wiki/Modules).
+
+Travis hosts the [project build](https://travis-ci.org/liftmodules/amqp/).
+SNAPSHOT versions are automatically published to Sonatype when merged to master.
+
+This project compiles for Lift 3 by default.
+To build for other versions of Lift, change the value of `liftVersion` in SBT.
+For example:
+
+```
+> set LiftModule.liftVersion := "2.6.3"
+> ++ 2.11.8
+> package
+```
+

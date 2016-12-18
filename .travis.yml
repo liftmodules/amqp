@@ -1,0 +1,15 @@
+language: scala
+jdk:
+- oraclejdk8
+cache:
+  directories:
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt"
+script:
+- sbt +test +package
+after_success:
+- "./travis-publish.sh"
+env:
+  global:
+  - secure: CoCzY6yYGP1pE7qrYMm9/N2xfbsqH7ZCGNldu//neYTiY92MTgwn/Z+tEPvgw/6fYcHIEgwIY9O5/DgLSLkFR31/FZQsmS9+SyjTs9St/3+XVfeJ4l+VyUe2jSxZx9uaNHaJmYYukKIpEf0X01cXmCxQjXQoKYubiI8HKkewzeQ=
+  - secure: GAkLcCAFWF2o5YLyWaOoP44iOF/9hLHFRm571RgmLoyQkBXSw7Osfv1znw3srGwfOKiM7PH9T4Eais+iTgOQdrfNXRtM4CvaD4797TZIHaqz+HMqXl1MJVJ2iS/K+K2RhJbSQU06yTG6Ks+lF+FK63nhXSFdgPy7T64FsVBd818=
