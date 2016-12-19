@@ -1,6 +1,8 @@
 AMQP Lift Module
 ==================
 
+[![Build Status](https://travis-ci.org/liftmodules/amqp.svg?branch=master)](https://travis-ci.org/liftmodules/amqp)
+
 This module provides integration with the [Advanced Message Queuing Protocol (AMQP)](http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol).
 
 Quick start for users
