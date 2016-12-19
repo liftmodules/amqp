@@ -6,23 +6,32 @@ This module provides integration with the [Advanced Message Queuing Protocol (AM
 Quick start for users
 =====================
 
-To include this module in your Lift project, update your `libraryDependencies` in `build.sbt` to include:
+To include this module in your Lift project change `build.sbt` to include:
 
-*Lift 2.6.x* for Scala 2.11:
+    libraryDependencies += "net.liftmodules" %% "amqp_3.0" % "1.4.0"
 
-    "net.liftmodules" %% "amqp_2.6" % "1.4.0"
+Previous releases
+-----------------
 
-*Lift 2.6.x* for Scala 2.9 and 2.10:
+| Lift Version | Scala Version | Module Version |
+|--------------|---------------|----------------|
+| 3.0          |  2.12, 2.11   | 1.4.0          |
+| 2.6          |  2.10, 2.9    | 1.3            |
+| 2.5          |  2.10, 2.9    | 1.3            |
 
-    "net.liftmodules" %% "amqp_2.6" % "1.3"
+Historic snapshot releases
+--------------------------
 
-*Lift 2.5.x* for Scala 2.9 and 2.10:
+| Lift Version | Scala Version | Module Version |
+|--------------|---------------|----------------|
+| 2.6          |   2.11        | 1.4-SNAPSHOT   |
+| 3.0          |   2.10        | 1.2-SNAPSHOT   |
 
-    "net.liftmodules" %% "amqp_2.5" % "1.3"
 
-*Lift 3.0.x* for Scala 2.10:
+For snapshots you'll also need:
 
-    "net.liftmodules" %% "amqp_3.0" % "1.3"
+    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+
 
 Documentation
 =============
