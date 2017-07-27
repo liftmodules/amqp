@@ -27,7 +27,7 @@ libraryDependencies ++=
   "net.liftweb" %% "lift-actor"  % liftVersion.value % "provided" ::
   Nil
 
-libraryDependencies += "com.rabbitmq" % "amqp-client" % "3.4.0"
+libraryDependencies += "com.rabbitmq" % "amqp-client" % "4.2.0"
 
 publishTo := (version.value.endsWith("SNAPSHOT") match {
   case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
