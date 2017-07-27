@@ -17,6 +17,7 @@ Previous releases
 
 | Lift Version | Scala Version | Module Version |
 |--------------|---------------|----------------|
+| 3.1          |  2.12, 2.11   | 1.5.0          |
 | 3.0          |  2.12, 2.11   | 1.4.0          |
 | 2.6          |  2.10, 2.9    | 1.3            |
 | 2.5          |  2.10, 2.9    | 1.3            |
@@ -32,7 +33,7 @@ Historic snapshot releases
 
 For snapshots you'll also need:
 
-    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+    resolvers += Resolver.sonatypeRepo("snapshots")
 
 
 Documentation
