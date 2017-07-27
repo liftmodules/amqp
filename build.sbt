@@ -4,30 +4,30 @@ name := "amqp"
 
 organization := "net.liftmodules"
 
-version := "1.4.0-SNAPSHOT"
+version := "1.5.0-SNAPSHOT"
 
-liftVersion := "3.0.1"
+liftVersion := "3.1.0"
 
 liftEdition := liftVersion.value.substring(0,3)
 
 moduleName := name.value + "_" + liftEdition.value
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.2"
 
-crossScalaVersions := Seq("2.12.1", "2.11.8")
+crossScalaVersions := Seq("2.12.2", "2.11.11")
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
 resolvers += "Java.net Maven2 Repository" at "http://download.java.net/maven/2/"
 
-resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
+resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++=
   "net.liftweb" %% "lift-webkit" % liftVersion.value % "provided" ::
   "net.liftweb" %% "lift-actor"  % liftVersion.value % "provided" ::
   Nil
 
-libraryDependencies += "com.rabbitmq" % "amqp-client" % "3.4.0"
+libraryDependencies += "com.rabbitmq" % "amqp-client" % "4.2.0"
 
 publishTo := (version.value.endsWith("SNAPSHOT") match {
   case true  => Some("snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
