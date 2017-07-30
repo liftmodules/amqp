@@ -10,7 +10,7 @@ Quick start for users
 
 To include this module in your Lift project change `build.sbt` to include:
 
-    libraryDependencies += "net.liftmodules" %% "amqp_3.0" % "1.4.0"
+    libraryDependencies += "net.liftmodules" %% "amqp_3.1" % "1.5.0"
 
 Previous releases
 -----------------
@@ -65,4 +65,3 @@ For example:
 > ++ 2.11.8
 > package
 ```
-
