@@ -10,13 +10,14 @@ Quick start for users
 
 To include this module in your Lift project change `build.sbt` to include:
 
-    libraryDependencies += "net.liftmodules" %% "amqp_3.1" % "1.5.0"
+    libraryDependencies += "net.liftmodules" %% "amqp_3.2" % "1.5.0"
 
 Previous releases
 -----------------
 
 | Lift Version | Scala Version | Module Version |
 |--------------|---------------|----------------|
+| 3.2          |  2.12, 2.11   | 1.5.0          |
 | 3.1          |  2.12, 2.11   | 1.5.0          |
 | 3.0          |  2.12, 2.11   | 1.4.0          |
 | 2.6          |  2.10, 2.9    | 1.3            |
